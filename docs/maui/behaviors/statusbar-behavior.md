@@ -84,7 +84,23 @@ class MyPage : ContentPage
 
 # [Android](#tab/android)
 
-No changes needed.
+Starting with .NET 9, [modal pages no longer inherit the status bar colors from the window that launched them](https://github.com/CommunityToolkit/Maui/pull/2413#issuecomment-2562966435).
+To preserve the status bar color from the previous page when navigating to a modal page, set the `SetShouldUseStatusBarBehaviorOnAndroidModalPage` option to "`true`" in the `UseMauiCommunityToolkit` which is in your `MauiProgram.cs` (as described [here](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/platform-specific/dialogfragment-customization#usage)):
+``` cs
+public static class MauiProgram
+{
+
+ public static MauiApp CreateMauiApp()
+ {
+  var builder = MauiApp.CreateBuilder()
+        .UseMauiCommunityToolkit(static options =>
+        {
+            options.SetShouldUseStatusBarBehaviorOnAndroidModalPage(true);
+        });
+        return builder.Build();
+    }
+}
+```
 
 # [iOS](#tab/ios)
 
